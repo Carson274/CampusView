@@ -1,0 +1,57 @@
+@startuml BackendServer
+
+interface BackendServer {
+    -db : MongoDB
+    -restaurants : Collection[Restaurant]
+    -clubs : Collection[Club]
+    -studyspots : Collection[StudySpot]
+    -reviews : Collection[Review]
+    -user_db : Dictionary[str : User]
+    -rest_map : Dictionary[str : ObjectId]
+    -club_map : Dictionary[str : ObjectId]
+    -study_map : Dictionary[str : ObjectId]
+    -review_map : Dictionary[str : ObjectId]
+
+    -fetch_all(collection : Collection)
+    -fetch_one(collection : Collection, map: Shelf, name : str)
+    -insert_new_item(collection : Collection, map: Shelf, name : str, item: BaseModel)
+    -update_item(collection: Collection, map: Shelf, name: str, item: BaseModel)
+    -delete_item(collection: Collection, map: Shelf, name: str)
+    
+    +fetch_restaurants()
+    +insert_new_restaurant(restaurant_name: str, restaurant: Restaurant)
+    +fetch_restaurant(restaurant_name: str)
+    +update_restaurant(restaurant_name: str, restaurant: Restaurant)
+    +delete_restaurant(restaurant_name: str)
+    
+    +fetch_clubs()
+    +insert_new_club(club_name: str, club: Club)
+    +fetch_club(club_name: str)
+    +update_club(club_name: str, club: Club)
+    +delete_club(club_name: str)
+    
+    +fetch_study_spots()
+    +insert_new_study_spot(spot_name: str, spot: StudySpot)
+    +fetch_study_spot(spot_name: str)
+    +update_study_spot(spot_name: str, spot: StudySpot)
+    +delete_study_spot(spot_name: str)
+
+    +fetch_reviews()
+    +insert_new_review(item_name: str, review: Review)
+    +fetch_review(review_id)
+    +update_review(review_id: str)
+    +delete_review(review_id: str)
+    
+    -auth_user(user_db : Shelf, username : str, password : str)
+    +login(form_data: OAuth2PasswordRequestForm)
+    +create_new_user(userdata: User)
+}
+
+BackendServer "1" ..> "1" DiningScraper : updated by
+BackendServer "1" ..> "1" ClubScraper : updated by
+
+BackendServer "1" -- "many" Restaurant : manages
+BackendServer "1" -- "many" Club : manages
+BackendServer "1" -- "many" StudySpot : manages
+
+@enduml

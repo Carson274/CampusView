@@ -1,0 +1,96 @@
+@startuml review_editing
+
+|User|
+start
+: Open CampusView App;
+
+fork
+    |User|
+    if (On User page?) then (yes)
+    else (no)
+        : Navigate to the User page;
+    endif
+    |app|
+    if (User is logged in?) then (yes)
+    else (no)
+        :User logs in to their account;
+    endif
+fork again
+    |User|
+    if (On dining page?) then (yes)
+    else (no)
+        : Navigate to the dining page;
+    endif
+
+    |App|
+    : Send API request to BackendServer for list of all restaurant objects;
+
+    |BackendServer|
+    : Recieve API request;
+    : Query restaurant collection in MongoDB;
+    if (Restaurant collection is empty) then (yes)
+        : Instantiate restaurant list as empty list;
+    else (no)
+        : Instantitate restaurant list from of\n all restaurant objects from database;
+    endif
+    : Send restaurant list to App;
+
+    |App|
+    : Update list of all restaurants;
+    if (List of all restaurants is empty) then (yes)
+        : Display "No restaurants available" message;
+    else (no)
+        : Display list of all restaurants on the page;
+    endif
+
+    |User|
+    : Scroll through the list;
+    : Find a restauraunt object that user has reviewed;
+    : Click on the specific list object with the review;
+
+    |App|
+    : Display additional information about the selected restaurant;
+endfork
+
+|App|
+: Send API request to BackendServer for list of all reviews from the user;
+    
+|BackendServer|
+: Query database for reviews from user;
+: Send list of reviews from user to app;
+
+|User|
+if (User has an existing review?) then (yes)
+    : Select the users existing review; 
+else (no)
+    :No existing review;
+    stop    
+endif
+: Select edit;
+
+|App|
+if (User is logged in?) then (yes)
+else (no)
+    :User logs in to their account;
+endif
+
+|App|
+: Display existing review in a text box under the review section of the card;
+
+|User|
+: Edit the text review;
+: Edit star rating;
+: Select Submit review button;
+
+|App|
+: Send API PUT request to Backend with review information (review text, star rating);
+
+|BackendServer|
+: Update review in backend database;
+: Return confirmation or error message;
+
+|App|
+: Show confirmation or error message to user based on response;
+
+stop
+@enduml

@@ -1,0 +1,87 @@
+@startuml review_submission
+
+|User|
+start
+: Open CampusView App;
+if (On dining page?) then (yes)
+else (no)
+    : Navigate to dining page;
+endif
+
+|App|
+: Send API request to BackendServer for list of all restaurant objects;
+
+|BackendServer|
+: Recieve API request;
+: Query restaurant collection in MongoDB;
+if (Restaurant collection is empty) then (yes)
+    : Instantiate restaurant list as empty list;
+else (no)
+    : Instantitate restaurant list from of\n all restaurant objects from database;
+endif
+: Send restaurant list to App;
+
+
+|App|
+: Update list of all restaurants;
+if (List of all restaurants is empty) then (yes)
+    : Display "No restaurants available" message;
+else (no)
+    : Display list of all restaurants on the page;
+endif
+
+|User|
+: Scroll through the list;
+: Find a restauraunt object to review;
+: Click on the specific list object for the restaurant;
+
+|App|
+: Display additional information about the selected restaurant;
+
+|User|
+: Select Create New Review from the expanded restaurant card;
+
+|App|
+if (User is logged in?) then (yes)
+else (no)
+    :User logs in to their account;
+endif
+: Send API request to Backend for reviews from user;
+
+|BackendServer|
+: Query database for reviews from user;
+: Send list of reviews from user;
+
+|App|
+: Store list of objects in local state;
+: Compare selected restaurant against list of existing reviews;
+
+if (User has an existing review for selected restaurant?) then (no)
+else (yes)
+    :Existing review must be edited instead;
+    stop
+endif
+
+|App|
+: Display a text box under the review section of the card;
+
+|User|
+: Enter a text review;
+: Add a star rating;
+: Select Submit review button;
+
+|App|
+if (Are all feilds filled?) then (yes)
+    : Send API request to Backend with review information (review text, star rating);
+else (no)
+    : Send error message;
+endif
+
+|BackendServer|
+: Store review in backend database;
+: Return confirmation or error message;
+
+|App|
+: Show confirmation or error message to user based on response;
+stop
+@enduml

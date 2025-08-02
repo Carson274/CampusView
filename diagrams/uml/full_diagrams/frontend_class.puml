@@ -1,0 +1,185 @@
+@startuml CampusViewFrontend
+
+interface FrontendApp {
+    -tabList : Tab[]
+    -restaurants : Restaurant[]
+    -clubs : Club[]
+    -studySpots : StudySpot[]
+    -user : User
+
+    +getRestuarants()
+    +getClubs()
+    +getStudySpots()
+    +loginUser()
+    +renderFrontendApp()
+}
+
+class User {
+    -user_id : int
+    -username : string
+    -name : string
+    -email : string
+    -reviews : ReviewSection
+
+    +createAccount()
+    +signIn()
+    +addReview()
+    +deleteReview()
+    +changePassword()
+}
+
+class Restaurant {
+    -name: str
+    -image: str
+    -building: str
+    -location: str
+    -schedule: Optional[Schedule]
+    -menu: Optional[list[MenuItem]]
+    -reviews: ReviewSection
+
+    +getRestaurant()
+    +getReview()
+}
+
+class MenuItem {
+    -title: str
+    -items: Optional[list[str]]
+
+    +getMenu()
+}
+
+Restaurant "1" o-- "many" MenuItem : contains
+
+class Club {
+    -name: str
+    -image: str
+    -building: str
+    -location: str
+    -link: str
+    -description: str
+    -schedule: Optional[Schedule]
+    -admins: list[int]
+    -reviews: ReviewSection
+
+    +getClubs()
+    +getReview()
+}
+
+class StudySpot {
+    -building: str
+    -location: str
+    -description: str
+    -schedule: Optional[Schedule]
+    -reviews: ReviewSection
+
+    +getStudySpots()
+    +getReview()
+}
+
+FrontendApp "many" *-- "3" Tab : stores
+FrontendApp "many" *-- "many" User : interacts with
+
+class Tab {
+    - cards : Card[]
+
+    +sortBy()
+    +filterBy()
+    +renderTab()
+}
+
+abstract class Card {
+    # page : Page
+    # title : string
+    # content : string
+
+    # renderCard()
+    # setTitle() 
+    # setContent() 
+
+}
+
+class DiningCard {
+    - restaurant : Restaurant
+
+    + renderCard()
+    + setTitle()
+    + setContent()
+    + setRestaurantInfo()
+    + getRestaurantDetails()
+}
+
+class ClubCard {
+    - club : Club
+
+    + renderCard()
+    + setTitle()
+    + setContent() 
+    + setClubInfo() 
+    + getClubDetails() 
+}
+
+class StudyCard {
+    - studySpot : StudySpot
+
+    + renderCard()
+    + setTitle()
+    + setContent()
+    + setStudySpotInfo()
+    + getStudySpotDetails()
+}
+
+DiningCard "1" *-- "1" Restaurant : contains
+ClubCard "1" *-- "1" Club : contains
+StudyCard "1" *-- "1" StudySpot : contains
+
+
+
+Card <|-- DiningCard
+Card <|-- ClubCard
+Card <|-- StudyCard
+
+class Page {
+    -title: string
+    +renderPage()
+}
+
+class Review {
+    -user: User
+    -time: DateTime
+    -img: Img[]
+    -description: string
+
+    +postReview()
+    +editReview()
+    +deleteReview()
+}
+
+FrontendApp "many" --> "3" Tab : manages
+Tab "1" *-- "many" Card : contains
+Card "1" *-- "1" Page : contains
+
+class ReviewSection {
+    -score: float
+    -reviews: list[Review]
+    -hidden: bool
+
+    -calcScore()
+    +getReviewSection()
+}
+
+ReviewSection "1" o-- "many" Review : contains
+Restaurant "1" *-- "1" ReviewSection : contains
+StudySpot "1" *-- "1" ReviewSection : contains
+Club "1" *-- "1" ReviewSection : contains
+
+class Schedule {
+    -days: List[(day: str, hours:List[(open: str, close: str)])]
+
+    +getSchedule()
+}
+
+Restaurant "1" o-- "1" Schedule : contains
+Club "1" o-- "1" Schedule : contains
+StudySpot "1" o-- "1" Schedule : contains
+
+@enduml

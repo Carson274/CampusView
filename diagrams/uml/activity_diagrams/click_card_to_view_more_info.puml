@@ -1,0 +1,46 @@
+@startuml click_card_to_view_more_info
+
+|User|
+start
+: Open CampusView App;
+if (Does user want to view dining?) then (yes)
+    : Navigate to the dining page; 
+    ' The homepage is already on dining *tab* so there is no navigation
+else (no)
+    if (Does user want to view clubs?) then (yes)
+        : Navigate to the clubs page;
+    else (no)
+        : Navigate to the study spots page;
+    endif
+    ' the app needs to display an updated page based on this behavior
+endif
+
+|App|
+
+: Send API request to Backend for correct objects;
+' specify what correct means, perhaps up-to-date?
+
+|BackendServer|
+: Query database for requested objects;
+: Send list of requested objects;
+' maybe more detail? could just rip from mine in filter_dining_hall or
+' search_specific_restaurant
+
+|App|
+: Store list of objects in local state;
+: Display default list of objects;
+
+|User|
+: Scroll through the chosen list;
+: Find an object to learn more about;
+: Click on the specific list object;
+
+|App|
+: Display additional information about the selected object;
+' Display page?
+
+'Reconcile at end to show the end product of the workflow with the user.
+
+stop
+
+@enduml

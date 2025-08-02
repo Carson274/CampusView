@@ -1,0 +1,56 @@
+@startuml filter_dining_hall
+|User|
+start
+:Open CampusView app;
+
+|App|
+: Send API request to BackendServer for list of all restaurant objects;
+
+|BackendServer|
+: Recieve API request;
+: Query restaurant collection in MongoDB;
+if (Restaurant collection is empty) then (yes)
+    : Instantiate restaurant list as empty list;
+else (no)
+    : Instantitate restaurant list from of\n all restaurant objects from database;
+endif
+: Send restaurant list to App;
+
+|App|
+: Update list of all restaurants;
+if (List of all restaurants is empty) then (yes)
+    : Display "No restaurants available" message;
+else (no)
+    : Display list of all restaurants on the page;
+endif
+
+|User|
+: Click on filter icon;
+
+|App|
+: Display filter modal/panel;
+
+|User|
+: Tap on dining hall location from dining hall options;
+
+|App|
+if (Dining hall selected) then (yes)
+    : Clear previous filter state;
+    : Lookup restaurants in restaurant list by dining hall category;
+    : Remove all restaurants not matching dining-hall category from filtered restaurant list;
+    : Save filter state for persistence;
+    if (Restaurants found) then (yes)
+        :Sort restaurants alphabetically;
+    else (no)
+        :Display "No restaurants found" message;
+    endif
+else (no)
+endif
+
+:Display list of relevant restaurants;
+
+|User|
+: View restaurant page with search\n error or list of restaurants;
+
+stop
+@enduml

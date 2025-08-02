@@ -1,0 +1,10 @@
+@startuml Page
+
+class Page {
+    -title: string
+    +renderPage()
+}
+
+Card "1" *-- "1" Page : contains
+
+@enduml

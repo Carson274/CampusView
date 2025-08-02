@@ -1,0 +1,182 @@
+@startuml CampusViewBackend
+
+' main interface
+interface BackendServer {
+    ' -db : MongoDB
+    -restaurants : Collection[Restaurant]
+    -clubs : Collection[Club]
+    -studyspots : Collection[StudySpot]
+    -reviews : Collection[Review]
+    ' -user_db : Dictionary[str : User]
+    ' -rest_map : Dictionary[str : ObjectId]
+    ' -club_map : Dictionary[str : ObjectId]
+    ' -study_map : Dictionary[str : ObjectId]
+    ' -review_map : Dictionary[str : ObjectId]
+    ' -fetch_all(collection : Collection)
+    ' -fetch_one(collection : Collection, map: Shelf, name : str)
+    ' -insert_new_item(collection : Collection, map: Shelf, name : str, item: BaseModel)
+    ' -update_item(collection: Collection, map: Shelf, name: str, item: BaseModel)
+    ' -delete_item(collection: Collection, map: Shelf, name: str)
+    +fetch_restaurants()
+    ' +insert_new_restaurant(restaurant_name: str, restaurant: Restaurant)
+    ' +fetch_restaurant(restaurant_name: str)
+    ' +update_restaurant(restaurant_name: str, restaurant: Restaurant)
+    ' +delete_restaurant(restaurant_name: str)
+    +fetch_clubs()
+    ' +insert_new_club(club_name: str, club: Club)
+    ' +fetch_club(club_name: str)
+    ' +update_club(club_name: str, club: Club)
+    ' +delete_club(club_name: str)
+    +fetch_study_spots()
+    ' +insert_new_study_spot(spot_name: str, spot: StudySpot)
+    ' +fetch_study_spot(spot_name: str)
+    ' +update_study_spot(spot_name: str, spot: StudySpot)
+    ' +delete_study_spot(spot_name: str)
+    +fetch_reviews()
+    ' +insert_new_review(item_name: str, review: Review)
+    ' +fetch_review(review_id)
+    ' +update_review(review_id: str)
+    ' +delete_review(review_id: str)
+    ' -auth_user(user_db : Shelf, username : str, password : str)
+    +login(form_data: OAuth2PasswordRequestForm)
+    +create_new_user(userdata: User)
+}
+
+' class declarations
+
+abstract class Scraper {
+    #url: string
+    #data: list
+    #scrapeData()
+    #postToServer()
+}
+
+class DiningScraper {
+    -timesURL : string
+    -menusURL : string
+    -rest_site_map : dict
+
+    -getMenus()
+    -getTimes()
+    -mergeMenusAndTimes()
+    +scrape_restaurants()
+    +scrapeData()
+    +postToServer()
+}
+
+class ClubScraper {
+    -clubsURL : string
+    -club_site_map : dict
+    +scrape_clubs()
+    +scrapeData()
+    +postToServer()
+}
+
+class StudySpot {
+    -building: str
+    -location: str
+    -description: str
+    -schedule: Schedule
+    -reviews: ReviewSection
+
+    +getStudySpots()
+    +getReview()
+}
+
+class MenuItem {
+    -title: str
+    -items: Optional[list[str]]
+
+    +getMenu()
+}
+
+' class HoursSchedule {
+'     +open: str
+'     +close: str
+' }
+
+' class DaySchedule {
+'     +day: str
+'     +hours: List[HoursSchedule]
+' }
+
+class Schedule {
+    -days: List[(day: str, hours:List[(open: str, close: str)])]
+
+    +getSchedule()
+}
+
+class Review {
+    -user: User
+    -time: DateTime
+    -img: Img[]
+    -description: string
+
+    +postReview()
+    +editReview()
+    +deleteReview()
+}
+
+class ReviewSection {
+    -score: float
+    -reviews: list[Review]
+    -hidden: bool
+
+    -calcScore()
+    +getReviewSection()
+}
+
+class Restaurant {
+    -name: str
+    -image: str
+    -building: str
+    -location: str
+    -schedule: Optional[Schedule]
+    -menu: Optional[list[MenuItem]]
+    -reviews: ReviewSection
+
+    +getRestaurant()
+    +getReview()
+}
+
+class Club {
+    -name: str
+    -image: str
+    -building: str
+    -location: str
+    -link: str
+    -description: str
+    -schedule: Optional[Schedule]
+    -admins: list[int]
+    -reviews: ReviewSection
+
+    +getClubs()
+    +getReview()
+}
+
+
+' Relationship between objects
+
+Restaurant "1" o-- "many" MenuItem : contains
+Restaurant "1" o-- "1" Schedule : contains
+Restaurant "1" *-- "1" ReviewSection : contains
+
+Club "1" o-- "1" Schedule : contains
+Club "1" *-- "1" ReviewSection : contains
+
+StudySpot "1" o-- "1" Schedule : contains
+StudySpot "1" *-- "1" ReviewSection : contains
+
+ReviewSection "1" o-- "many" Review : contains
+
+BackendServer "1" ..> "1" DiningScraper : updated by
+BackendServer "1" ..> "1" ClubScraper : updated by
+
+BackendServer "1" -- "many" Restaurant : manages
+BackendServer "1" -- "many" Club : manages
+BackendServer "1" -- "many" StudySpot : manages
+
+Scraper <|-- DiningScraper : extends
+Scraper <|-- ClubScraper : extends
+
+@enduml

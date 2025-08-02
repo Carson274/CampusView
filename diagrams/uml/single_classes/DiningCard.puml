@@ -1,0 +1,16 @@
+@startuml DiningCard
+
+class DiningCard {
+    + restaurant : Restaurant
+
+    + renderCard()
+    + setTitle()
+    + setContent()
+    + setRestaurantInfo()
+    + getRestaurantDetails()
+}
+
+Card <|-- DiningCard
+DiningCard "1" *-- "1" Restaurant : contains
+
+@enduml

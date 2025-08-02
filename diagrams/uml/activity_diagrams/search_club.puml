@@ -1,0 +1,54 @@
+@startuml search_cuisine
+
+|User|
+start
+: Open App;
+
+|App|
+: Send API request to BackendServer for list of all club objects;
+
+|BackendServer|
+: Recieve API request;
+: Query club collection in MongoDB;
+if (Club collection is empty) then (yes)
+    : Instantiate club list as empty list;
+else (no)
+    : Instantitate club list from of\n all club objects from database;
+endif
+: Send club list to App;
+
+|App|
+: Update list of all clubs;
+if (List of all clubs is empty) then (yes)
+    : Display "No clubs available" message;
+else (no)
+    : Display list of all clubs on the page;
+endif
+
+|User|
+: Type club name search query and tap enter;
+
+|App|
+: Get user club name search query;
+
+|App|
+: Parse user query;
+if (User query valid) then (yes)
+    : Perform exact keyword search based on club name;
+    : Remove all clubs with non-matching names from filtered club list;
+    if (Clubs found) then (yes)
+        : Sort filtered list of clubs alphabetically;
+        : Display list of clubs named the entered club name; 
+    else (no)
+        : Display search error message;
+    endif
+else (no)
+    : Display search error message;
+endif
+
+|User|
+: View club page with search\n error or list of clubs;
+
+stop
+
+@enduml

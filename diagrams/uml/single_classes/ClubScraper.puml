@@ -1,0 +1,14 @@
+@startuml ClubScraper
+
+class ClubScraper {
+    -clubsURL : string
+    -club_site_map : dict
+    +scrape_clubs()
+    +scrapeData()
+    +postToServer()
+}
+
+Scraper <|-- ClubScraper : extends
+BackendServer "1" ..> "1" ClubScraper : updated by
+
+@enduml

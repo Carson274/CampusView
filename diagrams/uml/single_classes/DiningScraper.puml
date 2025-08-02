@@ -1,0 +1,19 @@
+@startuml DiningScraper
+
+class DiningScraper {
+    -timesURL : string
+    -menusURL : string
+    -rest_site_map : dict
+
+    -getMenus()
+    -getTimes()
+    -mergeMenusAndTimes()
+    +scrape_restaurants()
+    +scrapeData()
+    +postToServer()
+}
+
+Scraper <|-- DiningScraper : extends
+BackendServer "1" ..> "1" DiningScraper : updated by
+
+@enduml

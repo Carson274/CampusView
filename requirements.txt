@@ -1,0 +1,14 @@
+blinker
+click
+Flask
+itsdangerous
+Jinja2
+MarkupSafe
+Werkzeug
+beautifulsoup4
+gunicorn
+pymongo[srv]==3.11
+python-dotenv
+fastapi
+PyJWT
+passlib

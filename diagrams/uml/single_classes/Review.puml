@@ -1,0 +1,16 @@
+@startuml Review
+
+class Review {
+    -user: User
+    -time: DateTime
+    -img: Img[]
+    -description: string
+
+    +postReview()
+    +editReview()
+    +deleteReview()
+}
+
+ReviewSection "1" o-- "many" Review : contains
+
+@enduml

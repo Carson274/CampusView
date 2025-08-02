@@ -1,0 +1,40 @@
+@startuml
+package "Data Management Layer (MongoDB)" {
+
+database "Data" {
+    folder "Clubs" { 
+     [ClubInfo]
+    }
+    folder "Restaurants" {
+     [RestaurantInfo]
+    }
+    folder "StudySpots" {
+     [StudySpotInfo]
+    }
+   
+}
+[DataManager] <-> "Data"
+}
+package "Backend For Frontend Layer (EC2)" {
+[Backend EC2 Server API (Flask)] as backendServer
+backendServer -> DataManager
+}
+package "UI Layer (React Native)" {
+MainInterface --> backendServer
+PageInterface --> backendServer
+ReviewInterface --> backendServer
+"UserProfile\nInterface" --> backendServer
+}
+package "Scraping Layer (BeautifulSoup)" {
+[RestaurantSpider]
+[ClubSpider]
+}
+
+package "UAuth Layer (JWT)" {
+database "UserAuthStorage" {
+}
+[AuthenticationInterface] <-> UserAuthStorage
+}
+backendServer -> AuthenticationInterface
+"Scraping Layer (BeautifulSoup)" -> DataManager
+@enduml

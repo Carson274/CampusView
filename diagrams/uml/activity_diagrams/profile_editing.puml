@@ -1,0 +1,43 @@
+@startuml profile_editing
+|User|
+start
+:Open the app and log in with valid credentials;
+:Navigate to the profile section;
+' Add the action for clicking the update profile button
+
+|App|
+if (Editing profile?) then (Yes)
+    ' Change to reflect only choosing to edit a single attribute)
+    :Update name to a different name;
+    :Update email to a different email;
+    :Update password to a different password;
+|Backend|
+    :Save the changes;
+|App|
+    :Display success message: "Profile updated successfully";
+else (No)
+    :Skip to next step;
+endif
+
+|User|
+:Navigate back to the profile section;
+
+|App|
+if (Deleting profile?) then (Yes)
+    :Click on "Delete Profile" option;
+    :Display confirmation prompt: "Are you sure?";
+    if (Confirm deletion?) then (Yes)
+|Backend|
+        :Delete profile from system;
+|App|
+        :Log user out;
+        :Redirect to login page;
+    else (No)
+        :Cancel deletion;
+    endif
+else (No)
+    :End session;
+endif
+
+stop
+@enduml

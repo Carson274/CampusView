@@ -1,0 +1,16 @@
+@startuml ClubCard 
+
+Class ClubCard {
+    + club : Club
+
+    + renderCard()
+    + setTitle()
+    + setContent() 
+    + setClubInfo() 
+    + getClubDetails() 
+}
+
+Card <|-- ClubCard
+ClubCard "1" *-- "1" Club : contains
+
+@enduml

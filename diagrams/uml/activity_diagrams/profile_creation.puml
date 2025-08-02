@@ -1,0 +1,26 @@
+@startuml profile_creation
+|User|
+start
+:Open the app;
+:Click on the "Sign Up" button;
+:Enter a valid email and password;
+
+|App|
+if (Is email format valid?) then (Yes)
+|Backend|
+    if (Is email unique?) then (Yes)
+        :Submit the sign-up form;
+|Backend|
+        :Create new profile in the system;
+|App|
+        :Display confirmation message;
+        :Redirect to the homepage of the app;
+    else (No)
+        :Display error message: "Email already exists";
+    endif
+else (No)
+    :Display error message: "Invalid email format";
+endif
+
+stop
+@enduml

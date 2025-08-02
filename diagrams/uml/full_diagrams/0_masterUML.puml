@@ -1,0 +1,173 @@
+@startuml OSU Companion
+
+class Server {
+    restaurantDatabase : Database
+    clubDatabase : Database
+    restaurantScraper : DiningScraper
+    clubScraper : ClubScraper
+    password : Database
+
+    updateRestaurantDatabase()
+    updateClubDatabase()
+    AddUser()
+    AuthenticateUser()
+    DeleteUser()
+}
+
+Server *-- DiningScraper
+Server *-- ClubScraper
+
+class App {
+    + tabList : Tab[]
+    + restaurants : Restaurant[]
+    + clubs : Club[]
+    + studySpots : StudySpot[]
+    + server : Server
+    + user : User
+
+    getRestuarants()
+    getClubs()
+    getStudySpots()
+    loginUser()
+    'Reconcile: Login method in the app class vs login method in the user class'
+    renderApp()
+}
+
+App *-- Server
+
+class User {
+    -name : string
+    -email : string
+    -password : string
+    -reviews : Review[]
+
+    +createAccount()
+    +signIn()
+    +addReview()
+    +deleteReview()
+    +changePassword()
+}
+
+class Restaurant {
+    +name : string
+    +rating : number
+    +times : string[]
+    +description : string
+    +menus : Menu[]
+    +building : string
+    +address : string
+    +reviews : Review[]
+
+    +getRestaurant()
+}
+
+class Club {
+    +name : string
+    +rating : number
+    +times : string[]
+    +description : string
+    +link : string
+    +reviews : Review[]
+
+    +getClubs()
+}
+
+class StudySpot {
+    - name : String
+    - rating : Number
+    - description : String
+    - building : String
+    - address : String
+    + schedule : Schedule
+    + reviews : Review[]
+
+    + getStudySpots()
+}
+
+App *-- Tab
+App *-- User
+
+class Tab {
+    + cards : Card[]
+
+    sortBy()
+    filterBy()
+    renderTab()
+}
+
+abstract class Card {
+    - page : Page
+    + title : string
+    + content : string
+
+    + renderCard()
+    + setTitle() 
+    + setContent() 
+}
+
+class DiningCard {
+    + restaurant : Restaurant
+}
+
+class ClubCard {
+    - club : Club
+
+    + renderCard() 
+    + setClubInfo() 
+    + getClubDetails() 
+}
+
+class StudyCard {
+    + studySpot : StudySpot
+}
+
+DiningCard *-- Restaurant
+ClubCard *-- Club
+StudyCard *-- StudySpot
+
+Restaurant *-- Review
+Club *-- Review
+StudySpot *-- Review
+
+Card <|-- DiningCard
+Card <|-- ClubCard
+Card <|-- StudyCard
+
+class Page {
+    renderPage()
+}
+
+class Review {
+    user: User
+    time: DateTime
+    img:   Img[]
+    description: string
+
+    postReview()
+    editReview()
+    deleteReview()
+}
+
+abstract class Scraper {
+    server: Server
+    data: list
+    scrapeData()
+    postToServer()
+}
+
+class DiningScraper {
+    getRestuarantsInfo()
+}
+
+class ClubScraper {
+    getClubsInfo()
+}
+
+Scraper <|-- DiningScraper
+Scraper <|-- ClubScraper
+
+App --> Tab
+Tab *-- Card
+Card *-- Page
+
+@enduml

@@ -1,0 +1,173 @@
+@startuml
+
+class App {
+tabList : list(Tab)
+userList : list(User)
+}
+
+App *-- Tab
+App --> Spider
+
+class Tab {
+
+}
+
+class DiningTab {
+-DiningCards: list(DiningCard)
+}
+
+class ClubTab {
+-ClubCards: list(ClubCard)
+}
+
+class StudyTab {
+-StudyCards: list(StudyCard)
+}
+
+
+Tab <|-- DiningTab
+Tab <|-- ClubTab
+Tab <|-- StudyTab
+
+class Card {
+-page : Page
+}
+
+class DiningCard {
+restaurant : Restaurant
+}
+
+class ClubCard {
+club : Club
+}
+
+class StudyCard {
+studySpot : StudySpot
+}
+
+Card <|-- DiningCard
+Card <|-- ClubCard
+Card <|-- StudyCard
+
+class Page {
+-ReviewSection : ReviewSection
+}
+
+class DiningPage {
+
+}
+
+class ClubPage {
+
+}
+
+class StudyPage {
+
+}
+
+Page <|-- DiningPage
+Page <|-- ClubPage
+Page <|-- StudyPage
+
+class ReviewSection {
+}
+
+class Review {
+
+}
+
+class ReviewList {
+
+}
+
+ReviewSection *-- ReviewList
+User *-- ReviewList
+ReviewList *-- Review
+
+class Club {
+
+}
+
+class Restaurant {
+}
+
+class StudySpot {
+
+}
+
+Tab *-- Card
+Card *-- Page
+StudyPage *-- ReviewSection
+ClubPage *-- ReviewSection
+DiningPage *-- ReviewSection
+
+DiningTab *-- DiningCard
+ClubTab *-- ClubCard
+StudyTab *-- StudyCard
+
+DiningCard *-- Restaurant
+StudyCard *-- StudySpot
+ClubCard *-- Club
+
+class Menu {
+
+}
+
+class MenuItem {
+
+}
+
+class CustomMenuItem {
+
+}
+
+Restaurant *-- Menu
+Menu *-- MenuItem
+Menu *-- CustomMenuItem
+MenuItem <-- CustomMenuItem
+
+DiningCard *-- DiningPage
+ClubCard *-- ClubPage
+StudyCard *-- StudyPage
+
+class Schedule {
+
+}
+
+Club *-- Schedule
+Restaurant *-- Schedule
+
+class User {
+
+}
+
+App *-- User
+
+User --> Tab
+
+class Spider {
+
+}
+
+class DiningSpider {
+
+}
+
+class MenuSpider {
+
+}
+
+class ClubSpider {
+
+}
+
+Spider <|-- DiningSpider
+Spider <|-- MenuSpider
+Spider <|-- ClubSpider
+
+
+DiningSpider --> Restaurant
+MenuSpider --> Menu
+ClubSpider --> Club
+
+@enduml

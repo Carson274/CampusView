@@ -1,0 +1,54 @@
+@startuml search_cuisine
+
+|User|
+start
+: Open App;
+
+|App|
+: Send API request to BackendServer for list of all restaurant objects;
+
+|BackendServer|
+: Recieve API request;
+: Query restaurant collection in MongoDB;
+if (Restaurant collection is empty) then (yes)
+    : Instantiate restaurant list as empty list;
+else (no)
+    : Instantitate restaurant list from of\n all restaurant objects from database;
+endif
+: Send restaurant list to App;
+
+|App|
+: Update list of all restaurants;
+if (List of all restaurants is empty) then (yes)
+    : Display "No restaurants available" message;
+else (no)
+    : Display list of all restaurants on the page;
+endif
+
+|User|
+: Type cuisine search query and tap enter;
+
+|App|
+: Get user cuisine search query;
+
+|App|
+: Parse user query;
+if (User query valid) then (yes)
+    : Perform exact keyword search based on restaurant description;
+    : Remove all restaurants with non-matching descriptions from filtered restaurant list;
+    if (Restaurants found) then (yes)
+        : Sort filtered list of restaurants alphabetically;
+        : Display list of restaurants serving the cuisine; 
+    else (no)
+        : Display search error message;
+    endif
+else (no)
+    : Display search error message;
+endif
+
+|User|
+: View restaurant page with search\n error or list of restaurants;
+
+stop
+
+@enduml

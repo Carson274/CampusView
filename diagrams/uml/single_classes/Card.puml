@@ -1,0 +1,20 @@
+@startuml Card
+
+abstract class Card {
+    # page : Page
+    # title : string
+    # content : string
+
+    # renderCard()
+    # setTitle() 
+    # setContent() 
+}
+
+Card <|-- ClubCard
+Card <|-- StudyCard
+Card <|-- DiningCard
+Card "1" *-- "1" Page : contains
+Tab "1" *-- "many" Card : contains
+
+
+@enduml

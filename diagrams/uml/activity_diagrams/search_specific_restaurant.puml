@@ -1,0 +1,51 @@
+@startuml search_restaurant
+
+|User|
+start
+: Open CampusView App;
+
+|App|
+if (On dining page?) then (yes)
+else (no)
+    : Navigate to the Dining page;
+endif
+
+: Send API request to Backend for list of all restaurant objects;
+
+|BackendServer|
+: Recieve API request;
+: Query restaurant collection in MongoDB;
+if (Restaurant collection is empty) then (yes)
+    : Instantiate restaurant list as empty list;
+else (no)
+    : Instantitate restaurant list from of\n all restaurant objects from database;
+endif
+: Send restaurant list to App;
+: Send list of all restaurant objects with details;
+
+|App|
+: Store list of all restaurants in local state;
+: Display default list of all restaurants;
+
+|User|
+: Click on search bar;
+: Enter restaurant name (e.g. "North Porch");
+: Press enter;
+
+|App|
+: Parse user query text;
+if (user query valid) then (yes)
+    : Perform case-insensitive search on restaurant names;
+    if (restaurant found) then (yes)
+        : Sort matching restaurants alphabetically;
+        : Display list of restaurants remaining;
+    else (no)
+        : Display "No restaurants found" message;
+    endif
+else (no)
+    : Display invalid search query message;
+endif
+
+: Display all restaurants with search error or list \nof matching restaurants;
+stop
+@enduml

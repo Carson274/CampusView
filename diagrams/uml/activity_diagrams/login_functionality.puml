@@ -1,0 +1,49 @@
+@startuml login_functionality
+
+' should start by navigating to login
+' the login isn't on every screen
+|User|
+start
+: Open App;
+: Navigate to login screen;
+: Select "Log In";
+
+|App|
+: Display login screen;
+
+|User|
+: Enter email and password;
+
+|App|
+: Send API request to BackendServer with\n user email and password;
+
+|BackendServer|
+: Receive login API request;
+: Validate user credentials against database;
+if (Credentials valid?) then (yes)
+    : Generate session token;
+    : Query user data from database;
+    : Send session token and user data to App;
+else (no)
+    : Send error response to App;
+endif
+
+|App|
+if (Response is valid session token?) then (yes)
+    : Store session token;
+    : Update user interface to logged-in state;
+    : Display user dashboard;
+else (no)
+    if (Response is credentials error?) then (yes)
+        : Display "Invalid email or password" message;
+    else (no)
+        : Display "Network/system error" message;
+    endif
+endif
+
+|User|
+: View logged-in state or retry login;
+
+stop
+
+@enduml

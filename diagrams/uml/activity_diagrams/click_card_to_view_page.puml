@@ -1,0 +1,57 @@
+@startuml click_card_to_view_page
+
+|User|
+start
+: Open CampusView App;
+if (Does user want to view dining?) then (yes)
+else (no)
+    if (Does user want to view clubs?) then (yes)
+        : Navigate to the clubs tab;
+    else (no)
+        : Navigate to the study spots tab;
+    endif
+endif
+
+|App|
+: Displays tab content based on selected tab;
+: Send API request to Backend for up-to-date 
+objects based on the selected tab;
+
+|BackendServer|
+: Receive API request;
+: Query the appropriate collection in MongoDB based on the selected tab;
+if (Collection is empty) then (yes)
+    : Instantiate list as an empty list;
+else (no)
+    : Instantiate list from all objects in the selected collection;
+endif
+: Send list to App;
+
+|App|
+: Store list of objects from the selected tab in local state;
+: Display default list of cards for each object in the list;
+
+|User|
+repeat
+    : Scroll through the list of cards;
+    : Click on the specific card object to learn more about;
+repeat while (User has not found the desired card?)
+
+|App|
+: Send API request to BackendServer for 
+page information about the selected card;
+
+|BackendServer|
+: Recieve API request;
+: Query collection in MongoDB for the selected object;
+: Send object information to App;
+
+|App|
+: Display page with a more in depth description about the selected object;
+
+|User|
+: View page with a more in depth description about the selected object;
+
+stop
+
+@enduml

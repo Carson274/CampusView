@@ -1,0 +1,19 @@
+@startuml User
+
+class User {
+    -user_id : int
+    -username : string
+    -name : string
+    -email : string
+    -reviews : ReviewSection
+
+    +createAccount()
+    +signIn()
+    +addReview()
+    +deleteReview()
+    +changePassword()
+}
+
+FrontendApp "many" *-- "many" User : interacts with
+
+@enduml

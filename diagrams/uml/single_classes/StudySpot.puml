@@ -1,0 +1,20 @@
+@startuml StudySpot
+
+class StudySpot {
+    -building: str
+    -location: str
+    -description: str
+    -schedule: Optional[Schedule]
+    -reviews: ReviewSection
+
+    + getStudySpots()
+    + getReview()
+}
+
+StudySpot "1" o-- "1" Schedule : contains
+StudySpot "1" *-- "1" ReviewSection : contains
+StudyCard "1" *-- "1" StudySpot : contains
+
+
+
+@enduml

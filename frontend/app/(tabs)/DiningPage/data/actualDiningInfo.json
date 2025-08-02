@@ -1,0 +1,198 @@
+[
+  {
+    "image": "",
+    "location": "Unit 3, Crossroads",
+    "menu": [
+      {
+        "items": [
+          "Pancakes",
+          "Omelette",
+          "Coffee"
+        ],
+        "title": "Breakfast"
+      },
+      {
+        "items": [
+          "Burger",
+          "Salad",
+          "Soda"
+        ],
+        "title": "Lunch"
+      },
+      {
+        "items": [
+          "Steak",
+          "Pasta",
+          "Wine"
+        ],
+        "title": "Dinner"
+      }
+    ],
+    "name": "test",
+    "schedule": {
+      "days": [
+        {
+          "day": "Monday",
+          "hours": [
+            {
+              "close": "8:00 PM",
+              "open": "8:00 AM"
+            }
+          ]
+        },
+        {
+          "day": "Tuesday",
+          "hours": [
+            {
+              "close": "8:00 PM",
+              "open": "8:00 AM"
+            }
+          ]
+        },
+        {
+          "day": "Wednesday",
+          "hours": [
+            {
+              "close": "8:00 PM",
+              "open": "8:00 AM"
+            }
+          ]
+        },
+        {
+          "day": "Thursday",
+          "hours": [
+            {
+              "close": "8:00 PM",
+              "open": "8:00 AM"
+            }
+          ]
+        },
+        {
+          "day": "Friday",
+          "hours": [
+            {
+              "close": "8:00 PM",
+              "open": "8:00 AM"
+            }
+          ]
+        },
+        {
+          "day": "Saturday",
+          "hours": [
+            {
+              "close": "8:00 PM",
+              "open": "8:00 AM"
+            }
+          ]
+        },
+        {
+          "day": "Sunday",
+          "hours": [
+            {
+              "close": "8:00 PM",
+              "open": "8:00 AM"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "image": "",
+    "location": "Unit 3, Crossroads",
+    "menus": [
+      {
+        "items": [
+          "Pancakes",
+          "Omelette",
+          "Coffee"
+        ],
+        "title": "Breakfast"
+      },
+      {
+        "items": [
+          "Burger",
+          "Salad",
+          "Soda"
+        ],
+        "title": "Lunch"
+      },
+      {
+        "items": [
+          "Steak",
+          "Pasta",
+          "Wine"
+        ],
+        "title": "Dinner"
+      }
+    ],
+    "name": "Campus Cafe",
+    "schedule": {
+      "days": [
+        {
+          "day": "Monday",
+          "hours": [
+            {
+              "close": "8:00 PM",
+              "open": "8:00 AM"
+            }
+          ]
+        },
+        {
+          "day": "Tuesday",
+          "hours": [
+            {
+              "close": "8:00 PM",
+              "open": "8:00 AM"
+            }
+          ]
+        },
+        {
+          "day": "Wednesday",
+          "hours": [
+            {
+              "close": "8:00 PM",
+              "open": "8:00 AM"
+            }
+          ]
+        },
+        {
+          "day": "Thursday",
+          "hours": [
+            {
+              "close": "8:00 PM",
+              "open": "8:00 AM"
+            }
+          ]
+        },
+        {
+          "day": "Friday",
+          "hours": [
+            {
+              "close": "8:00 PM",
+              "open": "8:00 AM"
+            }
+          ]
+        },
+        {
+          "day": "Saturday",
+          "hours": [
+            {
+              "close": "8:00 PM",
+              "open": "8:00 AM"
+            }
+          ]
+        },
+        {
+          "day": "Sunday",
+          "hours": [
+            {
+              "close": "8:00 PM",
+              "open": "8:00 AM"
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

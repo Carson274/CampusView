@@ -1,0 +1,22 @@
+@startuml Club
+
+class Club {
+    -name: str
+    -image: str
+    -building: str
+    -location: str
+    -link: str
+    -description: str
+    -schedule: Optional[Schedule]
+    -admins: list[int]
+    -reviews: ReviewSection
+
+    +getClubs()
+    +getReview()
+}
+
+ClubCard "1" *-- "1" Club : contains
+Club "1" *-- "1" ReviewSection : contains
+Club "1" o-- "1" Schedule : contains
+
+@enduml

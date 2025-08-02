@@ -1,0 +1,98 @@
+{
+    "name": "test",
+    "image": "",
+    "location": "Unit 3, Crossroads",
+    "schedule": {
+        "days": [
+            {
+                "day": "Monday",
+                "hours": [
+                    {
+                        "open": "8:00 AM",
+                        "close": "8:00 PM"
+                    }
+                ]
+            },
+            {
+                "day": "Tuesday",
+                "hours": [
+                    {
+                        "open": "8:00 AM",
+                        "close": "8:00 PM"
+                    }
+                ]
+            },
+            {
+                "day": "Wednesday",
+                "hours": [
+                    {
+                        "open": "8:00 AM",
+                        "close": "8:00 PM"
+                    }
+                ]
+            },
+            {
+                "day": "Thursday",
+                "hours": [
+                    {
+                        "open": "8:00 AM",
+                        "close": "8:00 PM"
+                    }
+                ]
+            },
+            {
+                "day": "Friday",
+                "hours": [
+                    {
+                        "open": "8:00 AM",
+                        "close": "8:00 PM"
+                    }
+                ]
+            },
+            {
+                "day": "Saturday",
+                "hours": [
+                    {
+                        "open": "8:00 AM",
+                        "close": "8:00 PM"
+                    }
+                ]
+            },
+            {
+                "day": "Sunday",
+                "hours": [
+                    {
+                        "open": "8:00 AM",
+                        "close": "8:00 PM"
+                    }
+                ]
+            }
+        ]
+    },
+    "menu": [
+        {
+            "title": "Breakfast",
+            "items": [
+                "Pancakes",
+                "Omelette",
+                "Coffee"
+            ]
+        },
+        {
+            "title": "Lunch",
+            "items": [
+                "Burger",
+                "Salad",
+                "Soda"
+            ]
+        },
+        {
+            "title": "Dinner",
+            "items": [
+                "Steak",
+                "Pasta",
+                "Wine"
+            ]
+        }
+    ]
+}

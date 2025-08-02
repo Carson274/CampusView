@@ -1,0 +1,56 @@
+@startuml filter_dining_hall
+|User|
+start
+:Open CampusView app;
+
+|App|
+: Send API request to BackendServer for list of all club objects;
+
+|BackendServer|
+: Recieve API request;
+: Query club collection in MongoDB;
+if (Restaurant collection is empty) then (yes)
+    : Instantiate club list as empty list;
+else (no)
+    : Instantitate club list from of\n all club objects from database;
+endif
+: Send club list to App;
+
+|App|
+: Update list of all clubs;
+if (List of all restaurants is empty) then (yes)
+    : Display "No clubs available" message;
+else (no)
+    : Display list of all clubs on the page;
+endif
+
+|User|
+: Click on filter icon;
+
+|App|
+: Display filter modal/panel;
+
+|User|
+: Tap on college from college association options;
+
+|App|
+if (College selected) then (yes)
+    : Clear previous filter state;
+    : Lookup clubs in club list by college association;
+    : Remove all clubs not matching college association category from filtered restaurant list;
+    : Save filter state for persistence;
+    if (Clubs found) then (yes)
+        :Sort clubss alphabetically;
+    else (no)
+        :Display "No clubs found" message;
+    endif
+else (no)
+endif
+
+:Display list of relevant clubs;
+
+|User|
+: View club page with search\n error or list of clubs;
+
+stop
+@enduml

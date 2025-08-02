@@ -1,0 +1,11 @@
+@startuml Tab
+
+class Tab {
+    -cards : Card[]
+
+    +sortBy()
+    +filterBy()
+    +renderTab()
+}
+
+@enduml

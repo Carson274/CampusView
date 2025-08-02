@@ -1,0 +1,27 @@
+@startuml FrontendApp
+
+interface FrontendApp {
+    -tabList : Tab[]
+    -restaurants : Restaurant[]
+    -clubs : Club[]
+    -studySpots : StudySpot[]
+    -user : User
+    -currentTab : Tab
+    -isLoggedIn : boolean
+    -lastUpdated : Date
+
+    +getRestaurants() : Restaurant[]
+    +getClubs() : Club[]
+    +getStudySpots() : StudySpot[]
+    +loginUser(username: String, password: String) : boolean
+    +logoutUser() : void
+    +renderFrontend() : void
+    +switchTab(tab: Tab) : void
+    +updateUserProfile(user: User) : void
+}
+
+FrontendApp "many" *-- "3" Tab : stores
+FrontendApp "many" --> "3" Tab : manages
+FrontendApp "many" *-- "many" User : interacts with
+
+@enduml

@@ -1,0 +1,13 @@
+@startuml Schedule
+
+class Schedule {
+    -days: List[(day: str, hours:List[(open: str, close: str)])]
+
+    +getSchedule()
+}
+
+Restaurant "1" o-- "1" Schedule : many
+Club "1" o-- "1" Schedule : many
+StudySpot "1" o-- "1" Schedule : many
+
+@enduml

@@ -1,0 +1,56 @@
+@startuml filter_study_spot
+|User|
+start
+:Open CampusView app;
+
+|App|
+: Send API request to BackendServer for list of all study spot objects;
+
+|BackendServer|
+: Recieve API request;
+: Query study spot collection in MongoDB;
+if (Study Spot collection is empty) then (yes)
+    : Instantiate study spot list as empty list;
+else (no)
+    : Instantitate study spot list from of\n all study spot objects from database;
+endif
+: Send study spot list to App;
+
+|App|
+: Update list of all study spot;
+if (List of all study spot is empty) then (yes)
+    : Display "No study spot available" message;
+else (no)
+    : Display list of all study spot on the page;
+endif
+
+|User|
+: Click on filter icon;
+
+|App|
+: Display filter modal/panel;
+
+|User|
+: Tap on college from college association options;
+
+|App|
+if (College selected) then (yes)
+    : Clear previous filter state;
+    : Lookup study spot in study spot list by college association;
+    : Remove all study spot not matching college association category from filtered restaurant list;
+    : Save filter state for persistence;
+    if (study spot found) then (yes)
+        :Sort study spot alphabetically;
+    else (no)
+        :Display "No study spot found" message;
+    endif
+else (no)
+endif
+
+:Display list of relevant study spot;
+
+|User|
+: View study spot page with search\n error or list of study spots;
+
+stop
+@enduml

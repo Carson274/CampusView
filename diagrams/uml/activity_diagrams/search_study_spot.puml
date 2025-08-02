@@ -1,0 +1,56 @@
+@startuml search_study_spot
+
+|User|
+start
+: Open CampusView App;
+: Navigate to Study Spots Tab;
+
+|App|
+: Send API request to Backend for list of all study spot objects;
+
+|BackendServer|
+: Receive API request;
+: Query study spot collection in MongoDB;
+if (Study Spot collection is empty) then (yes)
+    : Instantiate study spot list as empty list;
+else (no)
+    : Instantiate study spot list from all\n study spot objects from database;
+endif
+: Send study spot list to App;
+
+|App|
+: Store list of all study spots in local state;
+: Display default list of all study spots;
+: Show search bar prominently;
+
+|User|
+: Click on search bar;
+
+|App|
+: Display keyboard for user to type search query;
+
+|User|
+: Type building name (e.g. "Library");
+: Press enter key;
+
+|App|
+: Parse user query text;
+if (user query valid) then (yes)
+    : Perform case-insensitive search on building names;
+    if (study spots found) then (yes)
+        : Sort matching study spots alphabetically;
+        : Filter study spots containing search term;
+        : Display list of study spots remaining;
+    else (no)
+        : Display "No study spots found" message;
+    endif
+else (no)
+    : Display invalid search query message;
+endif
+
+|User|
+: View study spot page with search\n error or list of study spots;
+
+stop
+
+@enduml

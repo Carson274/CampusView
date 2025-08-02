@@ -1,0 +1,21 @@
+@startuml Restaurant
+
+class Restaurant {
+    -name: str
+    -image: str
+    -building: str
+    -location: str
+    -schedule: Optional[Schedule]
+    -menu: Optional[list[MenuItem]]
+    -reviews: ReviewSection
+
+    +getRestaurant()
+    +getReview()
+}
+
+DiningCard "1" *-- "1" Restaurant : contains
+Restaurant "1" *-- "1" ReviewSection : contains
+Restaurant "1" o-- "1" Schedule : contains
+Restaurant "1" o-- "many" MenuItem : contains
+
+@enduml

@@ -1,0 +1,12 @@
+@startuml MenuItem
+
+class MenuItem {
+    -title: str
+    -items: Optional[list[str]]
+
+    +getMenu()
+}
+
+Restaurant "1" o-- "many" MenuItem : contains
+
+@enduml

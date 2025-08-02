@@ -1,0 +1,84 @@
+@startuml UML_Diagram
+' go here to render the diagram - https://www.planttext.com/
+
+left to right direction
+
+' define actors
+actor "Guest User" as Guest
+actor "Registered User" as RegUser
+actor "Admin User" as Admin
+actor "Backend" as Backend
+
+' define subject and scope
+rectangle "Campus Information System" {
+  ' UI layer
+  package "UI Layer" {
+      usecase "Homepage Navigation" as UC9
+      usecase "Search for Items" as UC2
+      usecase "Search Error Prompt" as UC14
+      usecase "Search Results" as UC15
+      usecase "Filter through Items" as UC13
+      usecase "Select Multiple Filters" as UC16
+      usecase "View Details" as UC3
+      usecase "Submit Review" as UC4
+      usecase "Review Deletion" as UC17
+      usecase "Edit/Delete Review" as UC5
+      usecase "Report Review" as UC6
+      usecase "View Profile" as UC20
+      usecase "Edit Profile Settings" as UC7
+  }
+  
+  ' auth layer
+  package "UAuth Layer" {
+      usecase "Login" as UC1
+      usecase "Reset Password" as UC8
+  }
+  
+  ' backend layer
+  package "Backend Layer" {
+      usecase "View Reported Reviews" as UC11
+      usecase "Moderate Reviews" as UC12
+      usecase "Update Information" as UC21
+  }
+  
+  ' scraping layer
+  package "Scraping Layer" {
+      usecase "Scrape Information" as UC10
+  }
+}
+
+' relationships
+UC2 ..> UC14 : <<extend>>
+UC2 ..> UC15 : <<include>>
+UC13 ..> UC16 : <<include>>
+UC1 ..> UC8 : <<extend>>
+UC20 ..> UC7 : <<include>>
+UC4 ..> UC17 : <<include>>
+UC20 ..> UC8 : <<include>>
+UC10 ..> UC21 : <<include>>
+
+' guest user connections
+Guest --> UC1
+Guest --> UC2
+Guest --> UC3
+Guest --> UC9
+
+' registered user connections
+RegUser --> UC2
+RegUser --> UC13
+RegUser --> UC3
+RegUser --> UC4
+RegUser --> UC5
+RegUser --> UC6
+RegUser --> UC20
+RegUser --> UC9
+
+' admin user connections
+Admin --> UC11
+Admin --> UC12
+Admin --> UC21
+
+' backend connections
+Backend --> UC10
+
+@enduml

@@ -1,0 +1,60 @@
+@startuml refresh_app
+
+|User|
+start
+: Open App;
+
+|App|
+: Send API request to BackendServer for list of all restaurant objects;
+
+|BackendServer|
+: Receive API request;
+: Query restaurant collection in MongoDB;
+if (Restaurant collection is empty) then (yes)
+    : Instantiate restaurant list as empty list;
+else (no)
+    : Instantiate restaurant list from all\n restaurant objects in the database;
+endif
+: Send restaurant list to App;
+
+|App|
+: Update list of all restaurants;
+if (List of all restaurants is empty) then (yes)
+    : Display "No restaurants available" message;
+else (no)
+    : Display list of all restaurants on the page;
+endif
+
+|User|
+: Wiew restaurant info;
+: Swipe downward to refresh;
+
+
+|App|
+: Send API request to BackendServer\n for updated list of restaurant objects;
+
+|BackendServer|
+: Receive API request;
+: Check for new or updated information\n in restaurant collection;
+if (New or updated information found) then (yes)
+    : Query and instantiate list of new/updated\n restaurant objects;
+    : Send updated restaurant list to App;
+else (no)
+    : Send empty list indicating no updates;
+endif
+
+|App|
+if (Updated restaurant list received) then (yes)
+    : Update list of all restaurants;
+    : Display updated restaurant list;
+    : Update refresh icon;
+else (no)
+    : Display "Up to date" message;
+endif
+
+|User|
+: View most recent restaurant data;
+
+stop
+
+@enduml

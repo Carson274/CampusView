@@ -1,0 +1,17 @@
+@startuml ReviewSection
+
+class ReviewSection {
+    -score: float
+    -reviews: list[Review]
+    -hidden: bool
+
+    -calcScore()
+    +getReviewSection()
+}
+
+ReviewSection "1" o-- "many" Review : contains
+Restaurant "1" *-- "1" ReviewSection : has a
+StudySpot "1" *-- "1" ReviewSection : has a
+Club "1" *-- "1" ReviewSection : has a
+
+@enduml

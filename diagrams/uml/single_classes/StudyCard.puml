@@ -1,0 +1,16 @@
+@startuml StudyCard
+
+class StudyCard {
+    - studySpot : StudySpot
+
+    + renderCard()
+    + setTitle()
+    + setContent()
+    + setStudySpotInfo()
+    + getStudySpotDetails()
+}
+
+Card <|-- StudyCard
+StudyCard "1" *-- "1" StudySpot : contains
+
+@enduml
